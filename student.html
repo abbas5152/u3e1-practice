@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p id="ba"> </p>
+    <button>
+        <a href="dashboard.html">Dashboard</a>
+    </button>
+    <h2>Enter Student Details</h2>
+    <form id="form" onsubmit="myfunction(event)">
+        <input type="text" id="name" placeholder="Enter the name">
+        <br>
+        <br>
+        <input type="text" id="course" placeholder="Enter the course">
+        <br>
+        <br>
+        <input type="number" id="unit" placeholder="Enter unit number">
+        <br>
+        <br>
+        <input type="url" id="image" placeholder="Enter image url">
+        <br>
+        <br>
+        <input type="text" id="batch" placeholder="Enter the batch">
+        <br>
+        <br>
+        <input type="submit" id="sub">
+
+    </form>
+</body>
+</html>
+<script>
+    function construct(n,c,u,i,b){
+        this.name=n;
+        this.course=c;
+        this.unit=u;
+        this.image=i;
+        this.batch=b
+    }
+    function myfunction(event){
+        event.preventDefault();
+        var form= document.querySelector("#form")
+        var name=form.name.value;
+        var course=form.course.value;
+        var unit=form.unit.value;
+        var image=form.image.value;
+        var batch=form.batch.value;
+        console.log(name,course,unit,image,batch)
+        var data=JSON.parse(localStorage.getItem("stddata")) || [];
+        var s=new construct(name,course,unit,image,batch)
+        console.log(s)
+        data.push(s)
+        localStorage.setItem("stddata",JSON.stringify(data))
+    }
+    function calculate(){
+        var data=JSON.parse(localStorage.getItem("stddata")) || [];
+    var obj={}
+    for(var i=0;i<data.length;i++){
+        if(obj[data[i].batch]==undefined)
+        obj[data[i].batch]=1;
+        else
+        obj[data[i].batch]=obj[data[i].batch]+1
+    }
+    console.log(obj)
+    document.querySelector("#ba").append(obj)
+    
+}
+calculate();
+    
+</script>
